@@ -39,6 +39,11 @@ namespace Kalend
         public static int endSampleOffset = 256;
 
 
+        public static bool paused;
+
+       
+
+
         // Increment and Decrement functions can be built from this int (as in the ClipSelector class) by setting delta equal to one, or minus one, respectively. 
         public static int ModShift(int index, int n, int delta)
         {

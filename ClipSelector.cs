@@ -49,6 +49,12 @@ namespace Kalend
 
         private int _displayCount = 0;
 
+        private IEnumerator _fadeRoutine;
+
+        private bool _fadeRoutineSet;
+
+
+
 
         //The two variables bellow allow for songs to start (or end) after (before) a given number of samples.
         //This may improve the sound of repeated songs by compensating for latency (but can also make things worse if misused).
@@ -172,35 +178,45 @@ namespace Kalend
 
         public void ResetGroupVolume() //Resets audio to full scale (0).
         {
-
+            if (_fadeRoutineSet)
+            {
+                StopCoroutine(_fadeRoutine);
+                _fadeRoutineSet = false;
+            }
+           
             audioMixer.SetFloat(musicGroupVolume, 0f);
         }
 
         public void PlayAudio()
         {
-            if (repeat)
-            {
-                audioSource.timeSamples = _startSampleOffset;
-
-                _currentClipTime = _startSampleOffset / 48000f;
-
-                //Uncomment line below if you want to see what the sample offsets are when a track starts (only used when repeat == true).
-
-                //Debug.Log("<color=green>Starting Sample Offset = </color>" + _startSampleOffset + "<color=green> Samples. </color>"); 
-            }
-
-
-            else
-            {
-                _currentClipTime = 0f;
-
-            }
 
             ResetGroupVolume(); //Sets the volume back to full scale. (Especially usefal after fade.)
 
+            if (!paused)
+            {
+                if (repeat)
+                {
+                    audioSource.timeSamples = _startSampleOffset;
+
+                    _currentClipTime = _startSampleOffset / 48000f;
+
+                }
+
+
+                else
+                {
+                    _currentClipTime = 0f;
+
+                }
+
+            }
+        
+            
             audioSource.Play();
 
             _playing = true;
+
+            paused = false;
 
 
 
@@ -211,6 +227,7 @@ namespace Kalend
         {
 
             _playing = false;
+            paused = true;
             audioSource.Pause();
 
         }
@@ -379,7 +396,9 @@ namespace Kalend
         public void FadeAudioMixerGroup()
         {
 
-            StartCoroutine(FadeMixerGroup.FadeGroup(audioMixer, musicGroupVolume,  fadeTime, 0.0001f));
+            _fadeRoutine = FadeMixerGroup.FadeGroup(audioMixer, musicGroupVolume, fadeTime, 0.0001f);
+            _fadeRoutineSet = true;
+            StartCoroutine(_fadeRoutine);
 
         }
 
