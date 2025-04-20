@@ -15,16 +15,13 @@ namespace Kalend
         public static float lerpValue;
 
 
-
         public static IEnumerator ScalarLerpRoutine(float startValue, float endValue,  Kalend.Utilities.InterpolationType lerpType, float lerpDuration)
         {
-
 
             lerping = true;
 
             float elapsedTime = 0f;
 
-            //float result;
 
             Debug.Log("<color=blue> Lerping. </color>");
 
@@ -51,7 +48,9 @@ namespace Kalend
 
             lerping = false;
 
-            Debug.Log("<color=Red> Stopped Lerping. </color>");
+
+            //Uncomment the line below to see when lerping ends. 
+            //Debug.Log("<color=Red> Stopped Lerping. </color>");
 
 
         }

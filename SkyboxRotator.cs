@@ -15,21 +15,17 @@ namespace Kalend
 
         public bool useRotationSlider;
 
-        private bool _lerping;
-
         public Slider rotationSlider;
 
         public bool rotateSkybox;
 
-        [Range(-10f, 10f)]
+        [Range(-30f, 30f)]
         public float rotationSpeed = 0.001f;
 
         private float _rotationSpeed = 2f;
 
         private float _currentRotationSpeed;
-
-        private float _rotationParameter = 1f;
-
+       
         private float _rotation; 
 
         [SerializeField]
@@ -43,7 +39,6 @@ namespace Kalend
         [SerializeField]
         [Range(0.01f, 5f)]
         private float _lerpDuration = 0.5f;
-
 
 
         private void Awake()
@@ -84,10 +79,7 @@ namespace Kalend
 
             _currentRotationSpeed = rotationSpeed;
 
-
-            StartLerp(_currentRotationSpeed, 0f, Utilities.InterpolationType.Linear, _lerpDuration);
-
-            
+            StartLerp(_currentRotationSpeed, 0f, Utilities.InterpolationType.Linear, _lerpDuration);        
 
             //Debug.Log("<color=red>Skybox Rotation Stopped.</color>");
         }
@@ -95,11 +87,11 @@ namespace Kalend
 
         public void StartRotation()
         {
-            //rotateSkybox = true;
+     
 
             StartLerp(0f, _currentRotationSpeed, Utilities.InterpolationType.Linear, _lerpDuration);
 
-            // rotationSpeed = _rotationSpeed;
+            
         }
 
         public void StartLerp(float start, float end, Kalend.Utilities.InterpolationType iType, float duration)
@@ -113,10 +105,7 @@ namespace Kalend
         // Update is called once per frame
         void Update()
         {
-            //_rotationParameter = Time.time * rotationSpeed * _sliderValue % 360;
-
-
-          
+            
 
                if (useSkyboxChanger)
                 {
@@ -133,7 +122,6 @@ namespace Kalend
             {
 
 
-
                 _rotation = skybox.GetFloat("_Rotation");
 
                 _rotation += (Time.deltaTime * rotationSpeed * _sliderValue);
@@ -144,7 +132,7 @@ namespace Kalend
                 if (ScalarLerp.lerping)
                 {
                     rotationSpeed = Mathf.Abs(ScalarLerp.lerpValue);
-                    // _skybox.SetFloat("_Rotation", Time.time * rotationSpeed);
+                   
 
                     rotationSlider.gameObject.SetActive(false);
                 }
@@ -160,17 +148,9 @@ namespace Kalend
                 }
 
 
-
                 _skybox.SetFloat("_Rotation", _rotation);
 
-               // _skybox.SetFloat("_Rotation", _rotationParameter);
-
-                //_skybox.SetFloat("_Rotation", Time.time * rotationSpeed * _sliderValue);
-
-                
-
-                //Debug.Log(_skybox.GetFloat("_Rotation"));
-
+            
 
             }
 

@@ -7,7 +7,7 @@ using TMPro;
 
 namespace Kalend
 {
-    //This is basically just the ClipSelector script, with the addition of Playlists. 
+    //This is basically just the ClipSelector script--with the addition of Playlists. 
     [RequireComponent(typeof(AudioSource))]
     public class PlaylistSelector : ClipSelector
     {

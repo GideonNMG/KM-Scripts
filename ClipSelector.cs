@@ -55,16 +55,15 @@ namespace Kalend
 
 
 
-
         //The two variables bellow allow for songs to start (or end) after (before) a given number of samples.
         //This may improve the sound of repeated songs by compensating for latency (but can also make things worse if misused).
         //Only used by the script when bool repeat == true.
         [SerializeField]
-        [Range(0, 24000)]
+        [Range(0, 3000)]
         private int _startSampleOffset = 256;  
 
         [SerializeField]
-        [Range(0, 24000)]
+        [Range(0, 3000)]
         private int _endSampleOffset = 256;
 
         [Range(0.5f, 30f)]
@@ -80,9 +79,11 @@ namespace Kalend
         
         private static string _currentClipName = "";      
 
-        private int _loop = 0; //A dummy variable used to toggle the bool repeat (in the ToggleLooped() function). 
+        private int _loop = 0; //A dummy variable used to toggle the bool repeat (in the ToggleLooped() function).
 
-        public virtual void Awake()
+
+
+        public virtual void Awake() //virtual so that the child class PlaylistSelector can add new functions. 
         {
 
            if (audioClips != null)
@@ -176,16 +177,7 @@ namespace Kalend
 
         }
 
-        public void ResetGroupVolume() //Resets audio to full scale (0).
-        {
-            if (_fadeRoutineSet)
-            {
-                StopCoroutine(_fadeRoutine);
-                _fadeRoutineSet = false;
-            }
-           
-            audioMixer.SetFloat(musicGroupVolume, 0f);
-        }
+     
 
         public void PlayAudio()
         {
@@ -393,17 +385,58 @@ namespace Kalend
         }
 
 
-        public void FadeAudioMixerGroup()
+        public void ResetGroupVolume() //Resets audio to full scale (0).
         {
+            if (_fadeRoutineSet)
+            {
+                StopCoroutine(_fadeRoutine);
+                _fadeRoutineSet = false;
+            }
 
-            _fadeRoutine = FadeMixerGroup.FadeGroup(audioMixer, musicGroupVolume, fadeTime, 0.0001f);
-            _fadeRoutineSet = true;
-            StartCoroutine(_fadeRoutine);
+            audioMixer.SetFloat(musicGroupVolume, 0f);
+        }
+
+        public void FadeUp()
+        {
+            if (_fadeRoutineSet)
+            {
+                StopCoroutine(_fadeRoutine);
+
+            }
+
+
+            FadeAudioMixerGroup(1f);
 
         }
 
-     
 
+        public void FadeDown()
+        {
+            if (_fadeRoutineSet)
+            {
+                StopCoroutine(_fadeRoutine);
+
+            }
+
+
+            FadeAudioMixerGroup(0.0001f);
+
+        }
+
+
+        public void FadeAudioMixerGroup(float target)
+        {
+            
+            _fadeRoutine = FadeMixerGroup.FadeGroup(audioMixer, musicGroupVolume, fadeTime, target);
+            _fadeRoutineSet = true;
+            StartCoroutine(_fadeRoutine);
+
+            Debug.Log("<color=blue>Fade Mixer Group Called with target = </color>" + target + "<color=blue> .</color>");
+
+        }
+
+
+     
         public void Update()
         {
 

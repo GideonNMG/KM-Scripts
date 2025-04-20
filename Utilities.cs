@@ -250,31 +250,29 @@ namespace Kalend
                         case InterpolationType.Linear:
 
 
-                            //_interpolationTypeFormula[(int)interpolationType.Linear] = t;
                             break;
 
                         case InterpolationType.EaseOut:
                             t = Mathf.Sin(t * Mathf.PI * 0.5f);
 
-                            //_interpolationTypeFormula[(int)interpolationType.EaseOut] = Mathf.Sin(t * Mathf.PI * 0.5f);
+                            
 
                             break;
 
                         case InterpolationType.EaseIn:
                             t = 1 - Mathf.Cos(t * Mathf.PI * 0.5f);
 
-                            //_interpolationTypeFormula[(int)interpolationType.EaseOut] = 1 - Mathf.Cos(t * Mathf.PI * 0.5f);
                             break;
 
 
                         case InterpolationType.SmoothStep:
                             t = t * t * (3 - 2 * t);
-                            //_interpolationTypeFormula[(int)interpolationType.SmoothStep]= t = t * t * (3 - 2 * t);
+                           
                             break;
 
                         case InterpolationType.SmootherStep:
                             t = t * t * t * t * ((t * 6 - 15) + 10);
-                            //_interpolationTypeFormula[(int)interpolationType.SmootherStep] = t = t * t * t * (t * (t * 6 - 15) + 10);
+                            
                             break;
 
 
@@ -350,9 +348,7 @@ namespace Kalend
 
             return result;
 
-        }
-
-       
+        }      
        
 
     }

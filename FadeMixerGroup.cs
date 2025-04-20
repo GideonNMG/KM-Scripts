@@ -21,10 +21,10 @@ namespace Kalend
                 audioMixer.SetFloat(groupVolume, Mathf.Log10(newVol) * 20);
                 yield return null;
             }
+
+            //Debug.Log("<color=red>Fade Mixer Group ended with value = </color>" + targetValue + "<color=blue> .</color>");
             yield break;
         }
-
-
 
     }
 

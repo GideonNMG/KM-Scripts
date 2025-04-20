@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 namespace Kalend
 {
     // This is the (abstract) base class from which ClipSelector is derived. (PlaylistSelector is, in turn, derived from ClipSlector.) 
-    // The static variables declared below are availabel to all derived classes (and their child classes). 
+    // The static variables declared below are availabel to all derived classes (and their children). 
 
     public abstract class AudioSelection : MonoBehaviour
     {
@@ -33,11 +33,10 @@ namespace Kalend
 
         public static int currentIndex = 0;
 
-        //The two semaple offsets below can be used when songs are on repeat, to counter latency. 
-        public static int startSampleOffset = 256;
-
-        public static int endSampleOffset = 256;
-
+        //The two sample offsets below can be used when songs are on repeat, to counter latency. 
+       // public static int startSampleOffset = 256;
+        
+       // public static int endSampleOffset = 256;
 
         public static bool paused;
 
