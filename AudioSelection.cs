@@ -33,11 +33,6 @@ namespace Kalend
 
         public static int currentIndex = 0;
 
-        //The two sample offsets below can be used when songs are on repeat, to counter latency. 
-       // public static int startSampleOffset = 256;
-        
-       // public static int endSampleOffset = 256;
-
         public static bool paused;
 
        

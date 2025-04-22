@@ -26,7 +26,16 @@ namespace Kalend
 
         private float _currentRotationSpeed;
        
-        private float _rotation; 
+        private float _rotation;
+
+
+        public bool setStartingRotation;
+
+        [Range(0f, 360f)]
+        public float startingRotation = 9f;
+
+        private float _startingPosition;
+
 
         [SerializeField]
         [Range(-1f, 1f)]
@@ -43,6 +52,7 @@ namespace Kalend
 
         private void Awake()
         {
+          
             if (rotateSkybox)
             {
                 _sliderValue = _startingSliderValue;
@@ -50,15 +60,47 @@ namespace Kalend
                 if (skybox != null && !useSkyboxChanger)
                 {
                     _skybox = skybox;
-
-                }         
+                
+                }        
 
             }
+         
 
             _rotationSpeed = rotationSpeed;
 
             _currentRotationSpeed = rotationSpeed;
         }
+
+     
+    
+        private void Start()
+        {
+
+            CheckCurrentSkybox();
+
+            _startingPosition = _skybox.GetFloat("_Rotation");
+            //Debug.Log("Starting Position is " + _startingPosition + ".");
+
+            if (setStartingRotation)
+            {
+
+               
+
+                startingRotation = (startingRotation) % 360; 
+
+                _skybox.SetFloat("_Rotation", startingRotation);
+
+                //Debug.Log("Starting Rotation is " + startingRotation + ".");
+            }
+
+
+            _rotation = skybox.GetFloat("_Rotation");
+
+
+            //Debug.Log("Rotation is " + _rotation + ".");
+
+        }
+
 
 
         public void SetRotationSpeed()
@@ -87,10 +129,9 @@ namespace Kalend
 
         public void StartRotation()
         {
-     
 
+            rotateSkybox = true;
             StartLerp(0f, _currentRotationSpeed, Utilities.InterpolationType.Linear, _lerpDuration);
-
             
         }
 
@@ -98,6 +139,26 @@ namespace Kalend
         {
 
             StartCoroutine(ScalarLerp.ScalarLerpRoutine(start, end, iType, duration));
+        }
+
+
+        private void CheckCurrentSkybox()
+        {
+            if (useSkyboxChanger)
+            {
+
+                _skybox = SkyboxChanger.currentSkybox;
+                
+            }
+
+
+            else
+            {
+                _skybox = skybox;
+
+            }
+
+            skybox = _skybox;
 
         }
 
@@ -105,17 +166,9 @@ namespace Kalend
         // Update is called once per frame
         void Update()
         {
-            
-
-               if (useSkyboxChanger)
-                {
-
-                    _skybox = SkyboxChanger.currentSkybox;
 
 
-                    skybox = _skybox;
-                }
-          
+            CheckCurrentSkybox();
 
 
             if (rotateSkybox )
@@ -147,9 +200,7 @@ namespace Kalend
 
                 }
 
-
                 _skybox.SetFloat("_Rotation", _rotation);
-
             
 
             }

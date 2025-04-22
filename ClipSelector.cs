@@ -38,7 +38,7 @@ namespace Kalend
 
         public bool repeat = true;
 
-        public bool playOnStart = true;
+        public bool playOnStart = false;
 
         public bool startUIHidden;
 
@@ -161,6 +161,12 @@ namespace Kalend
             {
 
                 PlayAudio();
+            }
+
+            else
+            {
+                StopAudio();
+
             }
         }
 
