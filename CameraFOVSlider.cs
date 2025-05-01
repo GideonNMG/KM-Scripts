@@ -16,7 +16,7 @@ namespace Kalend
 
         public bool useFOVSlider;
 
-        public float cameraFOV = 80f;
+        public float cameraFOV = 60f;
 
         [Range(20, 60)]
         public float fovMin = 30f;
@@ -26,7 +26,6 @@ namespace Kalend
 
 
 
-        // Start is called before the first frame update
         private void Awake()
         {
 
